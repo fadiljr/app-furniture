@@ -43,7 +43,6 @@ class SurveyResource extends Resource
     {
         return [
             'index' => ListSurveys::route('/'),
-            'create' => CreateSurvey::route('/create'),
             'edit' => EditSurvey::route('/{record}/edit'),
         ];
     }

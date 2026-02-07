@@ -53,4 +53,8 @@ class Project extends Model
     {
         return $this->payments()->sum('amount');
     }
+    public function surveys()
+    {
+        return $this->hasMany(Survey::class);
+    }
 }

@@ -8,6 +8,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use App\Filament\Resources\Projects\ProjectResource;
+use Filament\Actions\ViewAction;
 
 class ProjectsTable
 {
@@ -29,9 +30,11 @@ class ProjectsTable
                     ->date(),
             ])
             ->actions([
-                Action::make('view')
-                    ->label('Detail')
-                    ->icon('heroicon-o-eye'),
+                // Action::make('view')
+                //     ->label('Detail')
+                //     ->icon('heroicon-o-eye'),
+
+                ViewAction::make(),
 
                 EditAction::make(),
             ])
