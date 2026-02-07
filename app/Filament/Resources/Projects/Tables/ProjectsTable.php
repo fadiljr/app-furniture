@@ -17,17 +17,21 @@ class ProjectsTable
         return $table
             ->columns([
                 TextColumn::make('client.name')
-                    ->label('client name')
+                    ->label('Client Name')
                     ->searchable(),
 
                 TextColumn::make('project_type')
-                    ->label('Jenis'),
+                    ->label('Project Type')
+                    ->searchable(),
 
                 TextColumn::make('status')
-                    ->badge(),
+                    ->badge()
+                    ->searchable(),
 
                 TextColumn::make('created_at')
-                    ->date(),
+                    ->label('Created Date')
+                    ->date()
+                    ->searchable(),
             ])
             ->actions([
                 // Action::make('view')
