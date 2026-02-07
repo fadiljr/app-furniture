@@ -18,7 +18,7 @@ class MaterialResource extends Resource
 {
     protected static ?string $model = Material::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::WrenchScrewdriver;
 
     protected static ?string $recordTitleAttribute = 'Material';
 
