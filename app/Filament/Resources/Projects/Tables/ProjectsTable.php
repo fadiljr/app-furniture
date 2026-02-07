@@ -16,7 +16,7 @@ class ProjectsTable
         return $table
             ->columns([
                 TextColumn::make('client.name')
-                    ->label('Klien')
+                    ->label('client name')
                     ->searchable(),
 
                 TextColumn::make('project_type')
@@ -24,9 +24,6 @@ class ProjectsTable
 
                 TextColumn::make('status')
                     ->badge(),
-
-                TextColumn::make('estimated_cost')
-                    ->money('IDR'),
 
                 TextColumn::make('created_at')
                     ->date(),
