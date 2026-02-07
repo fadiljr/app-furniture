@@ -17,6 +17,7 @@ class Project extends Model
         'total_paid',
         'start_date',
         'end_date',
+        'description',
     ];
 
     public function client()

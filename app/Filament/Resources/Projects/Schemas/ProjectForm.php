@@ -32,6 +32,8 @@ class ProjectForm
                 ->required(),
             Textarea::make('address')
                 ->required()
+                ->maxLength(100),
+            Textarea::make('description')
                 ->maxLength(255),
 
         ]);
