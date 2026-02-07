@@ -16,6 +16,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Material;
+use Filament\Schemas\Components\Fieldset;
 use Illuminate\Validation\Rules\Date;
 
 class ProjectForm
@@ -38,9 +39,8 @@ class ProjectForm
             Textarea::make('description')
                 ->maxLength(255),
 
-            Repeater::make('surveys')
-                ->label('Survey')
-                ->relationship()
+            Fieldset::make('Survey')
+                ->relationship('surveys')
                 ->schema([
                     DatePicker::make('survey_date')
                         ->label('Tanggal Survey')
@@ -51,9 +51,7 @@ class ProjectForm
                         ->rows(3)
                         ->maxLength(255),
                 ])
-                ->addActionLabel('Tambah Survey')
-                ->collapsible()
-                ->columnSpanFull(),
+                ->columns(1),
         ]);
     }
 }

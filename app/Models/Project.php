@@ -55,6 +55,6 @@ class Project extends Model
     }
     public function surveys()
     {
-        return $this->hasMany(Survey::class);
+        return $this->hasOne(Survey::class);
     }
 }
