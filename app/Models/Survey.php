@@ -16,6 +16,10 @@ class Survey extends Model
 
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
+    public function surveyRooms()
+    {
+        return $this->hasMany(SurveyRoom::class, 'survey_id', 'id');
     }
 }
