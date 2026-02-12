@@ -12,7 +12,7 @@ use Filament\Actions\ViewAction;
 
 class ProjectsTable
 {
-    public static function configure(Table $table): Table
+    public static function configure(Table $table): Table 
     {
         return $table
             ->columns([

@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Clients\Tables;
 
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use filament\Actions\Action;
 
 class ClientsTable
 {
@@ -16,7 +18,10 @@ class ClientsTable
             TextColumn::make('phone'),
 
             TextColumn::make('address')->limit(30),
-
+        ])
+        ->actions([
+            //
+            EditAction::make(),
         ]);
     }
 }

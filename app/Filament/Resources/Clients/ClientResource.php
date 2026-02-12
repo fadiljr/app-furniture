@@ -25,6 +25,7 @@ class ClientResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Users;
 
     protected static ?string $recordTitleAttribute = 'Client';
+    protected static ?string $label = 'Client List';
 
     public static function form(Schema $schema): Schema
     {

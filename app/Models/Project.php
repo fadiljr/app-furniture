@@ -57,4 +57,8 @@ class Project extends Model
     {
         return $this->hasOne(Survey::class);
     }
+    public function rab()
+    {
+        return $this->hasOne(Rab::class);
+    }
 }
