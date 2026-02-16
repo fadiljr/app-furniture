@@ -22,6 +22,8 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permission penting (Filament butuh ini)
 RUN chmod -R 775 storage bootstrap/cache
 
+RUN php artisan storage:link || true
+
 # Expose port (Render pakai 10000)
 EXPOSE 10000
 
