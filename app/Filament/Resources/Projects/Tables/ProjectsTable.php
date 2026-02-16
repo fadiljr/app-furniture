@@ -16,6 +16,9 @@ class ProjectsTable
     {
         return $table
             ->columns([
+                TextColumn::make('project_number')
+                    ->label('Project Number')
+                    ->searchable(),
                 TextColumn::make('client.name')
                     ->label('Client Name')
                     ->searchable(),
@@ -28,10 +31,10 @@ class ProjectsTable
                     ->badge()
                     ->searchable(),
 
-                TextColumn::make('created_at')
-                    ->label('Created Date')
-                    ->date()
-                    ->searchable(),
+                TextColumn::make('surveys.survey_date')
+                    ->label('Survey Date')
+                    ->dateTime('d/M/Y H:i')
+                    ->sortable(),
             ])
             ->actions([
                 // Action::make('view')

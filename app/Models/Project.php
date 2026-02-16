@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    public static function generateProjectNumber()
+    {
+        $today = now()->format('Ymd');
+
+        $countToday = self::whereDate('created_at', now()->toDateString())->count() + 1;
+
+        return 'PRO' . $today . '' . str_pad($countToday, 3, '0', STR_PAD_LEFT);
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($project) {
+            $project->project_number = self::generateProjectNumber();
+        });
+    }
     protected $fillable = [
         'client_id',
         'project_type',

@@ -16,6 +16,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Material;
+use DateTime;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Components\Fieldset;
 use Illuminate\Validation\Rules\Date;
 
@@ -25,8 +27,23 @@ class ProjectForm
     {
         return $schema->schema([
 
+            TextInput::make('project_number')
+                ->label('Project Number')
+                ->disabled()
+                ->dehydrated(false)
+                ->default(
+                    fn () => \App\Models\Project::generateProjectNumber()
+                ),
+
             Select::make('client_id')
-                ->relationship('client', 'name')
+                ->label('Client')
+                ->relationship(
+                    name: 'client',
+                    titleAttribute: 'name'
+                )
+                ->getOptionLabelFromRecordUsing(fn ($record) => 
+                    $record->client_code . ' - ' . $record->name . ' - ' . $record->phone
+                )
                 ->required()
                 ->searchable()
                 ->preload(),
@@ -42,8 +59,10 @@ class ProjectForm
             Fieldset::make('Survey')
                 ->relationship('surveys')
                 ->schema([
-                    DatePicker::make('survey_date')
+                    DateTimePicker::make('survey_date')
                         ->label('Tanggal Survey')
+                        ->seconds(false)
+                        ->displayFormat('d/M/Y H:i')
                         ->required(),
 
                     Textarea::make('notes')

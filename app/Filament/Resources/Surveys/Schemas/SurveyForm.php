@@ -8,6 +8,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Components\Wizard\Step;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\DatePicker;
@@ -18,6 +20,11 @@ class SurveyForm
     {
         return $schema
             ->components([
+                TextInput::make('project.project_number')
+                    ->label('Project Number')
+                    ->default(fn($record) => $record->project->project_number ?? '')
+                    ->disabled()
+                    ->dehydrated(false),
                 TextInput::make('project.project_type')
                     ->label('Project Name')
                     ->disabled()
@@ -47,14 +54,15 @@ class SurveyForm
 
                 Fieldset::make('Detail Survey')
                     ->schema([
-                        Wizard::make([
-                                Step::make('Room Details')
+                        Tabs::make('Survey Tabs')
+                            ->tabs([
+                                Tab::make('Room Details')
                                     ->schema([
                                         Repeater::make('surveyRooms')
                                             ->label('Rooms')
-                                            ->defaultItems(1)
                                             ->relationship('surveyRooms')
                                             ->minItems(1)
+                                            ->defaultItems(1)
                                             ->schema([
                                                 TextInput::make('room_name')
                                                     ->label('Room Name')
@@ -79,18 +87,18 @@ class SurveyForm
                                                     ->label('Notes')
                                                     ->maxLength(255),
                                             ]),
-                                    ])->columnSpanFull(),
-                                Step::make('Material Details')
+                                    ]),
+
+                                Tab::make('Material Details')
                                     ->schema([
                                         TextInput::make('additional_info')
                                             ->label('Additional Information')
                                             ->maxLength(500),
-                                    ])->columns(2),
-
-                                    
+                                    ]),
                             ])
                             ->columnSpanFull(),
-                    ])->columnSpanFull(),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 }

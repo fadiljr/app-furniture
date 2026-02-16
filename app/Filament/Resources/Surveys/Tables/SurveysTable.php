@@ -16,13 +16,25 @@ class SurveysTable
         return $table
             ->columns([
                 //
-                TextColumn::make('project.project_type')->label('Project Name'),
-                TextColumn::make('project.client.name')->label('Client Name'),
+                TextColumn::make('project.project_number')
+                    ->label('Project Number')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('project.project_type')
+                    ->label('Project Name'),
+                TextColumn::make('project.client.name')
+                    ->label('Client Name')
+                    ->searchable(),
                 TextColumn::make('survey_date')
-                ->label('Survey Date')
-                ->date(),
-                TextColumn::make('notes')->label('Notes')->limit(50),
-                TextColumn::make('status')->label('Status')->badge(),
+                    ->label('Survey Date')
+                    ->sortable()
+                    ->dateTime('d M Y H:i'),
+                TextColumn::make('notes')
+                    ->label('Notes')
+                    ->limit(50),
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->badge(),
             ])
             ->filters([
                 //
