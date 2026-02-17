@@ -68,9 +68,8 @@ class ProjectForm
                     Textarea::make('notes')
                         ->label('Catatan Survey')
                         ->rows(3)
-                        ->maxLength(255),
-                ])
-                ->columns(1),
+                        ->maxLength(255)
+                ])->columns(1),
         ]);
     }
 }
