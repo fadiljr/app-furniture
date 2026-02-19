@@ -21,7 +21,7 @@ class RabResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
 
     protected static ?string $recordTitleAttribute = 'RAB';
-    protected static ?string $label = 'RAB List'; 
+    protected static ?string $label = 'Quotation List'; 
 
     public static function form(Schema $schema): Schema
     {
