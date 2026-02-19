@@ -13,10 +13,12 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+    protected static UnitEnum|string|null $navigationGroup = 'Management Users';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
@@ -47,4 +49,8 @@ class UserResource extends Resource
             'edit' => EditUser::route('/{record}/edit'),
         ];
     }
+    public static function canViewAny(): bool
+{
+    return auth()->user()?->isSuperAdmin();
+}
 }
