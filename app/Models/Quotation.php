@@ -9,8 +9,6 @@ class Quotation extends Model
     //
     protected $fillable = [
         'quotation_number',
-        'client_name',
-        'client_address',
         'quotation_date',
         'valid_until',
         'total_amount',
@@ -39,5 +37,10 @@ class Quotation extends Model
      public function items()
      {
          return $this->hasMany(QuotationItem::class);
+     }
+
+     public function client()
+     {
+         return $this->belongsTo(Client::class);
      }
 }

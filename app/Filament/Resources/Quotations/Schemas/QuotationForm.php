@@ -13,6 +13,20 @@ use Filament\Forms\Components\Checkbox;
 
 class QuotationForm
 {
+    protected static function updateTotals(callable $set, callable $get): void
+    {
+        $items = $get('items') ?? [];
+        $total = 0;
+        foreach ($items as $item) {
+            $total += $item['subtotal'] ?? 0;
+        }
+        $discount = (float) $get('discount');
+        $tax = (float) $get('tax');
+        $grandTotal = max(0, $total - $discount + $tax);
+        $set('total_amount', $total);
+        $set('grand_total', round($grandTotal, 2));
+    }
+
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -24,16 +38,21 @@ class QuotationForm
                             ->label('Quotation Number')
                             ->disabled()
                             ->dehydrated(false)
-                            ->default(fn () => \App\Models\Quotation::generateQuotationNumber()),
+                            ->default(fn() => \App\Models\Quotation::generateQuotationNumber()),
 
-                        TextInput::make('client_name')
-                            ->label('Client Name')
+                        Select::make('client_id')
+                            ->label('Client')
+                            ->relationship(
+                                name: 'client',
+                                titleAttribute: 'name'
+                            )
+                            ->getOptionLabelFromRecordUsing(
+                                fn($record) =>
+                                $record->client_code . ' - ' . $record->name . ' - ' . $record->phone
+                            )
                             ->required()
-                            ->maxLength(255),
-
-                        Textarea::make('client_address')
-                            ->label('Client Address')
-                            ->rows(3),
+                            ->searchable()
+                            ->preload(),
 
                         DatePicker::make('quotation_date')
                             ->label('Quotation Date')
@@ -54,7 +73,7 @@ class QuotationForm
                                     ->label('Item Name')
                                     ->required()
                                     ->columnSpan(2),
-                                
+
                                 Checkbox::make('use_prorate')
                                     ->label('Use Prorate')
                                     ->live()
@@ -63,19 +82,15 @@ class QuotationForm
                                         $length = (float) $get('length');
                                         $unitPrice = (float) $get('unit_price');
 
-                                        // If unchecked, prorate_value is ignored and subtotal uses standard formula
                                         if (!$state) {
                                             $set('prorate_value', 0);
                                         }
 
                                         $subtotal = $length * $unitPrice;
                                         $set('subtotal', round($subtotal, 2));
-                                    }),
 
-                                Textarea::make('description')
-                                    ->label('Description')
-                                    ->rows(2)
-                                    ->columnSpan(2),
+                                        self::updateTotals($set, $get);
+                                    }),
 
                                 TextInput::make('length')
                                     ->label('Length (m1)')
@@ -97,6 +112,8 @@ class QuotationForm
                                             }
                                             $set('subtotal', round($subtotal, 2));
                                         }
+
+                                        self::updateTotals($set, $get);
                                     })
                                     ->required(),
 
@@ -120,6 +137,8 @@ class QuotationForm
                                             }
                                             $set('subtotal', round($subtotal, 2));
                                         }
+
+                                        self::updateTotals($set, $get);
                                     })
                                     ->required(),
 
@@ -143,9 +162,11 @@ class QuotationForm
                                             }
                                             $set('subtotal', round($subtotal, 2));
                                         }
+
+                                        self::updateTotals($set, $get);
                                     })
-                                    ->visible(fn ($get) => $get('use_prorate'))
-                                    ->required(fn ($get) => $get('use_prorate')),
+                                    ->visible(fn($get) => $get('use_prorate'))
+                                    ->required(fn($get) => $get('use_prorate')),
 
                                 Select::make('unit')
                                     ->label('Unit')
@@ -176,6 +197,8 @@ class QuotationForm
                                             }
                                             $set('subtotal', round($subtotal, 2));
                                         }
+
+                                        self::updateTotals($set, $get);
                                     })
                                     ->required(),
 
@@ -198,25 +221,35 @@ class QuotationForm
                             ->label('Total')
                             ->numeric()
                             ->prefix('Rp')
-                            ->disabled(),
+                            ->disabled()
+                            ->reactive(),
 
                         TextInput::make('discount')
                             ->label('Discount')
                             ->numeric()
                             ->prefix('Rp')
-                            ->default(0),
+                            ->default(0)
+                            ->reactive()
+                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                self::updateTotals($set, $get);
+                            }),
 
                         TextInput::make('tax')
                             ->label('Tax')
                             ->numeric()
                             ->prefix('Rp')
-                            ->default(0),
+                            ->default(0)
+                            ->reactive()
+                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                self::updateTotals($set, $get);
+                            }),
 
                         TextInput::make('grand_total')
                             ->label('Grand Total')
                             ->numeric()
                             ->prefix('Rp')
-                            ->disabled(),
+                            ->disabled()
+                            ->reactive(),
 
                         Textarea::make('notes')
                             ->label('Notes')
