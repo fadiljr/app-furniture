@@ -10,6 +10,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Checkbox;
+use Filament\Schemas\Components\Fieldset;
 
 class QuotationForm
 {
@@ -64,11 +65,11 @@ class QuotationForm
                     ->columns(2),
 
                 Section::make('Items')
-                    ->columnSpanFull()
+                    ->columnSpanFull() 
                     ->schema([
                         Repeater::make('items')
-                            ->relationship()
-                            ->schema([
+                        ->relationship('items')
+                        ->schema([
                                 TextInput::make('item_name')
                                     ->label('Item Name')
                                     ->required()
@@ -207,7 +208,7 @@ class QuotationForm
                                     ->numeric()
                                     ->prefix('Rp')
                                     ->disabled()
-                                    ->dehydrated(false),
+                                    ->dehydrated(true),
                             ])
                             ->columns(3)
                             ->defaultItems(1)
@@ -222,6 +223,7 @@ class QuotationForm
                             ->numeric()
                             ->prefix('Rp')
                             ->disabled()
+                            ->dehydrated(true)
                             ->reactive(),
 
                         TextInput::make('discount')
@@ -249,6 +251,7 @@ class QuotationForm
                             ->numeric()
                             ->prefix('Rp')
                             ->disabled()
+                            ->dehydrated(true)
                             ->reactive(),
 
                         Textarea::make('notes')

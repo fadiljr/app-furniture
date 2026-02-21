@@ -18,7 +18,7 @@ class QuotationsTable
                 //
                 TextColumn::make('quotation_number')
                     ->label('Quotation Number'),
-                TextColumn::make('client_name')
+                TextColumn::make('client.name')
                     ->label('Client Name'),
                 TextColumn::make('quotation_date')
                     ->label('Quotation Date'),
@@ -31,7 +31,9 @@ class QuotationsTable
                 // TextColumn::make('tax')
                 //     ->label('Tax'),
                 TextColumn::make('grand_total')
-                    ->label('Grand Total'),
+                    ->label('Grand Total')
+                    ->prefix('Rp. ')
+                    ->formatStateUsing(fn ($state) => number_format((float) $state, 0, ',', '.')),
                 TextColumn::make('status')
                     ->label('Status'),
             ])

@@ -8,10 +8,18 @@ class QuotationItem extends Model
 {
     //
     protected $fillable = [
+        'item_name',
+        'unit',
+        'length',
+        'value',
+        'prorate_value',
         'quotation_id',
         'description',
-        'quantity',
         'unit_price',
-        'total_price',
+        'subtotal',
     ];
+    public function quotation()
+    {
+        return $this->belongsTo(Quotation::class);
+    }
 }
