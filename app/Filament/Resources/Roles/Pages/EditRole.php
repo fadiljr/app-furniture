@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Clients\Pages;
+namespace App\Filament\Resources\Roles\Pages;
 
-use App\Filament\Resources\Clients\ClientResource;
+use App\Filament\Resources\Roles\RoleResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditClient extends EditRecord
+class EditRole extends EditRecord
 {
-    protected static string $resource = ClientResource::class;
+    protected static string $resource = RoleResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -16,9 +16,8 @@ class EditClient extends EditRecord
             DeleteAction::make(),
         ];
     }
-    protected function getRedirectUrl(): string
+     protected function getRedirectUrl(): string
 {
     return $this->getResource()::getUrl('index');
 }
-
 }

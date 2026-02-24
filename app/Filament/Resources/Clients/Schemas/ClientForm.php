@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Clients\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 
 class ClientForm
 {
@@ -22,9 +23,17 @@ class ClientForm
                 ->required()
                 ->maxLength(100),
 
+            Select::make('company_id')
+                ->label('Company')
+                ->relationship('company', 'name')
+                ->searchable()
+                ->preload()
+                ->required(),
+
             TextInput::make('phone'),
 
             Textarea::make('address'),
+            
 
         ]);
     }

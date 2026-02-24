@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Clients\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use filament\Actions\Action;
 
 class ClientsTable
@@ -19,6 +20,11 @@ class ClientsTable
 
             TextColumn::make('name')->searchable(),
 
+            TextColumn::make('company.name')
+                ->label('Company')
+                ->searchable()
+                ->sortable(),
+
             TextColumn::make('phone'),
 
             TextColumn::make('address')->limit(30),
@@ -26,6 +32,7 @@ class ClientsTable
         ->actions([
             //
             EditAction::make(),
+            DeleteAction::make(),
         ]);
     }
 }

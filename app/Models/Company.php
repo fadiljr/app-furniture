@@ -11,4 +11,8 @@ class Company extends Model
         'company_code',
         'address',
     ];
+    public function clients()
+{
+    return $this->hasMany(Client::class);
+}
 }

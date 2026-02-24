@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::table('quotations', function (Blueprint $table) {
             //
-            $table->string('quotation_number')->unique();
-            $table->date('quotation_date');
-            $table->date('valid_until')->nullable();
-            $table->decimal('total_amount', 15, 2)->default(0);
-            $table->decimal('discount', 15, 2)->default(0);
-            $table->decimal('tax', 15, 2)->default(0);
-            $table->decimal('grand_total', 15, 2)->default(0);
-            $table->enum('status', ['draft', 'sent', 'approved', 'rejected'])->default('draft');
-            $table->text('notes')->nullable();
+            // $table->string('quotation_number')->unique();
+            // $table->date('quotation_date');
+            // $table->date('valid_until')->nullable();
+            // $table->decimal('total_amount', 15, 2)->default(0);
+            // $table->decimal('discount', 15, 2)->default(0);
+            // $table->decimal('tax', 15, 2)->default(0);
+            // $table->decimal('grand_total', 15, 2)->default(0);
+            // $table->enum('status', ['draft', 'sent', 'approved', 'rejected'])->default('draft');
+            // $table->text('notes')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
         });

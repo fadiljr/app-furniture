@@ -33,12 +33,9 @@ class UsersTable
                     ->label('Company')
                     ->searchable(),
 
-                BadgeColumn::make('role')
-                    ->colors([
-                        'danger' => 'super_admin',
-                        'warning' => 'admin',
-                        'success' => 'user',
-                    ])
+                TextColumn::make('roles.name')
+                    ->label('Role')
+                    ->badge()
                     ->formatStateUsing(fn ($state) => ucfirst(str_replace('_', ' ', $state))),
 
                 TextColumn::make('created_at')

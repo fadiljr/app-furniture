@@ -36,15 +36,12 @@ class UserForm
                     ->searchable()
                     ->preload(),
 
-                Select::make('role')
-                    ->label('Role')
-                    ->options([
-                        'super_admin' => 'Super Admin',
-                        'admin' => 'Admin',
-                        'user' => 'User',
-                    ])
+                Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->searchable()
                     ->required(),
-
+    
                 TextInput::make('password')
                     ->label('Password')
                     ->password()
