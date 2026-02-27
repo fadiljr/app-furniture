@@ -11,7 +11,6 @@ class PriceList extends Model
         'item_name',
         'price',
         'unit',
-        'size',
         'description',
     ];
 }

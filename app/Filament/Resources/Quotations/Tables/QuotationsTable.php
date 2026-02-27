@@ -36,9 +36,7 @@ class QuotationsTable
                     ->prefix('Rp. ')
                     ->formatStateUsing(fn ($state) => number_format((float) $state, 0, ',', '.')),
                 TextColumn::make('status')
-                    ->label('Status')
-                    ->badge()
-                    ->sortable(),
+                    ->label('Status'),
             ])
             ->filters([
                 //

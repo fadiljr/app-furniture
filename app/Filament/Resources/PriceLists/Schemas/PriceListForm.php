@@ -19,11 +19,6 @@ class PriceListForm
                     ->label('Item Name')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('size')
-                    ->label('Size (cm)')
-                    ->required()
-                    ->numeric()
-                    ->minValue(0),
                 TextInput::make('price')
                     ->label('Price')
                     ->required()

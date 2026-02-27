@@ -19,18 +19,13 @@ class PriceListsTable
                     ->label('Item Name')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('size')
-                    ->label('Size (cm)')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('unit')
-                    ->label('Unit')
-                    ->sortable(),
                 TextColumn::make('price')
                     ->label('Price')
                     ->sortable()
-                    ->prefix('Rp. ')
-                    ->formatStateUsing(fn($state) => number_format((float) $state, 0, ',', '.')),
+                    ->money('IDR', true),
+                TextColumn::make('unit')    
+                    ->label('Unit')
+                    ->sortable(),
                 TextColumn::make('description')
                     ->label('Description')
                     ->limit(50),

@@ -12,11 +12,7 @@ class Survey extends Model
         'survey_date',
         'notes',
         'status',
-        'attchments',
     ];
-    protected $casts = [
-    'attchments' => 'array',
-];
 
     public function project()
     {
