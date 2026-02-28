@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('surveys', function (Blueprint $table) {
             //
-            $table->dropColumn('attchments');
+            $table->dropIfExists('attachments');
         });
     }
 
