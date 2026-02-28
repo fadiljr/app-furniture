@@ -23,24 +23,12 @@ class SurveyForm
     {
         return $schema
             ->components([
-<<<<<<< Updated upstream
-                Select::make('project_id')
-                    ->label('Project Number')
-                    ->relationship(name: 'project', titleAttribute: 'project_number')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => 
-                        $record->project_number
-                    )
-                    ->disabled()
-                    ->dehydrated(false),
-                Select::make('project_id')
-=======
                 TextInput::make('project.project_number')
                     ->label('Project Number')
                     ->disabled()
                     ->dehydrated(false)
                     ->formatStateUsing(fn ($record) => $record?->project?->project_number),
                 TextInput::make('project.project_type')
->>>>>>> Stashed changes
                     ->label('Project Name')
                     ->relationship(name: 'project', titleAttribute: 'project_type')
                     ->getOptionLabelFromRecordUsing(fn ($record) => 
