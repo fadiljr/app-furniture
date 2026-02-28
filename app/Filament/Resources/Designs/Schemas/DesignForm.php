@@ -6,6 +6,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
 
 class DesignForm
 {
@@ -34,6 +36,20 @@ class DesignForm
                 ->label('Deskripsi')
                 ->rows(4)
                 ->columnSpanFull(),
+
+            Select::make('status')
+                ->options([
+                    'requested' => 'Design Requested',
+                    'in_progress' => 'In Progress',
+                    'in_review' => 'In Review',
+                    'revision' => 'Revision Required',
+                    'approved' => 'Approved',
+                ])
+                ->default('requested')
+                ->required(),
+
+            DatePicker::make('deadline')
+                ->required(),
         ]);
 }
 }

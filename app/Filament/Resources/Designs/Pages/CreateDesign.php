@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Designs\Pages;
 
 use App\Filament\Resources\Designs\DesignResource;
 use Filament\Resources\Pages\CreateRecord;
+use Carbon\Carbon;
 
 class CreateDesign extends CreateRecord
 {
@@ -12,10 +13,13 @@ class CreateDesign extends CreateRecord
 {
     $data['design_id'] = 'DSN-' . now()->format('YmdHis');
 
+
     return $data;
 }
  protected function getRedirectUrl(): string
 {
     return $this->getResource()::getUrl('index');
 }
+
+
 }

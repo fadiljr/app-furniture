@@ -10,9 +10,13 @@ class Design extends Model
     'design_id',
     'file_path',
     'description',
+    'status',
+    'deadline',
 ];
 
 protected $casts = [
     'file_path' => 'array', // WAJIB
+    'deadline' => 'date',
 ];
+
 }

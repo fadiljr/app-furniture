@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Actions\DeleteAction;
 use Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Columns\BadgeColumn;
 
 class DesignsTable
 {
@@ -36,7 +37,31 @@ class DesignsTable
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
+            BadgeColumn::make('status')
+                ->colors([
+                    'gray' => 'requested',
+                    'warning' => 'in_progress',
+                    'info' => 'in_review',
+                    'danger' => 'revision',
+                    'success' => 'approved',
+        ]),
+            BadgeColumn::make('deadline')
+                ->label('Deadline')
+                ->formatStateUsing(fn ($state) => $state?->format('d M Y'))
+                ->colors([
+                    'danger' => fn ($record) =>
+                        $record->deadline &&
+                        $record->deadline->isPast() &&
+                        $record->status !== 'approved',
+                    'gray' => fn ($record) =>
+                        $record->deadline &&
+                        $record->deadline->isFuture(),
+                    'success' => fn ($record) =>
+                        $record->status === 'approved',
+                ])
+                
         ])
+            
         ->filters([
             //
         ])
