@@ -13,6 +13,9 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
+use Laravel\Pail\File;
 
 class SurveyForm
 {
@@ -20,6 +23,7 @@ class SurveyForm
     {
         return $schema
             ->components([
+<<<<<<< Updated upstream
                 Select::make('project_id')
                     ->label('Project Number')
                     ->relationship(name: 'project', titleAttribute: 'project_number')
@@ -29,18 +33,31 @@ class SurveyForm
                     ->disabled()
                     ->dehydrated(false),
                 Select::make('project_id')
+=======
+                TextInput::make('project.project_number')
+                    ->label('Project Number')
+                    ->disabled()
+                    ->dehydrated(false)
+                    ->formatStateUsing(fn ($record) => $record?->project?->project_number),
+                TextInput::make('project.project_type')
+>>>>>>> Stashed changes
                     ->label('Project Name')
                     ->relationship(name: 'project', titleAttribute: 'project_type')
                     ->getOptionLabelFromRecordUsing(fn ($record) => 
                         $record->project_type
                     )
                     ->disabled()
-                    ->dehydrated(false),
-
-                Select::make('project.client.name')
+                    ->dehydrated(false)
+                    ->formatStateUsing(fn ($record) => $record?->project?->project_type),
+                TextInput::make('client.name')
                     ->label('Client Name')
                     ->disabled()
-                    ->dehydrated(false),
+                    ->dehydrated(false)
+                    ->formatStateUsing(fn ($record) => $record?->project?->client?->name),
+                TextInput::make('status')
+                        ->label('Status')
+                        ->disabled()
+                        ->dehydrated(false),
 
                 DateTimePicker::make('survey_date')
                     ->label('Survey Date')
@@ -48,19 +65,18 @@ class SurveyForm
                         ->displayFormat('d/M/Y H:i')
                         ->required(),
 
-                TextInput::make('notes')
+                Textarea::make('notes')
                     ->label('Notes')
                     ->maxLength(255),
-                Select::make('status')
-                    ->label('Status')
-                    ->default(fn($record) => $record->status ?? 'test')
-                    ->options([
-                        'pending' => 'Pending',
-                        'in_progress' => 'In Progress',
-                        'completed' => 'Completed',
-                        'canceled' => 'Canceled',
-                    ])
-                    ->required()
+                FileUpload::make('attachments')
+                    ->label('Attachments')
+                    ->multiple()
+                    ->disk('public')
+                    ->directory('survey-attachments')
+                    ->preserveFilenames()
+                    ->openable()
+                    ->downloadable()
+                    ->dehydrated(false),
             ]);
     }
 }

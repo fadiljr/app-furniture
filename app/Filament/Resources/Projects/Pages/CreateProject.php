@@ -10,13 +10,12 @@ class CreateProject extends CreateRecord
 {
     protected static string $resource = ProjectResource::class;
     protected function getRedirectUrl(): string
-{
-    return $this->getResource()::getUrl('index');
-}
+    {
+        return $this->getResource()::getUrl('index');
+    }
 
-protected function getCreatedNotificationTitle(): ?string
-{
-    return 'Successfully created project';
-}
-
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        return 'Successfully created project';
+    }
 }

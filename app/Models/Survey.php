@@ -12,6 +12,10 @@ class Survey extends Model
         'survey_date',
         'notes',
         'status',
+        'attachments',
+    ];
+    protected $casts = [
+        'attachments' => 'array',
     ];
 
     public function project()
