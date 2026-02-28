@@ -41,19 +41,25 @@ class QuotationForm
                             ->dehydrated(false)
                             ->default(fn() => \App\Models\Quotation::generateQuotationNumber()),
 
-                        Select::make('client_id')
-                            ->label('Client')
-                            ->relationship(
-                                name: 'client',
-                                titleAttribute: 'name'
-                            )
-                            ->getOptionLabelFromRecordUsing(
-                                fn($record) =>
-                                $record->client_code . ' - ' . $record->name . ' - ' . $record->phone
-                            )
-                            ->required()
-                            ->searchable()
-                            ->preload(),
+                        // Select::make('client_id')
+                        //     ->label('Client')
+                        //     ->relationship(
+                        //         name: 'client',
+                        //         titleAttribute: 'name'
+                        //     )
+                        //     ->getOptionLabelFromRecordUsing(
+                        //         fn($record) =>
+                        //         $record->client_code . ' - ' . $record->name . ' - ' . $record->phone
+                        //     )
+                        //     ->required()
+                        //     ->searchable()
+                        //     ->preload(),
+
+                        TextInput::make('project.project_number')
+                            ->label('Project Number')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->formatStateUsing(fn ($record) => $record?->project?->project_number),
 
                         DatePicker::make('quotation_date')
                             ->label('Quotation Date')

@@ -95,8 +95,8 @@
         <div class="right">
             <h1>QUOTATION</h1>
             <div class="box">
-                Date : {{ \Carbon\Carbon::parse($quotation->created_at)->format('d/m/Y') }}<br>
-                Expires : {{ \Carbon\Carbon::parse($quotation->expired_at ?? $quotation->created_at)->format('d/m/Y') }}
+                Date : {{ \Carbon\Carbon::parse($quotation->quotation_date)->format('d/m/Y') }}<br>
+                Expires : {{ \Carbon\Carbon::parse($quotation->valid_until)->format('d/m/Y') }}
             </div>
         </div>
     </div>

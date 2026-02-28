@@ -16,6 +16,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Laravel\Pail\File;
+use Illuminate\Support\Facades\Storage;
 
 class SurveyForm
 {
@@ -30,10 +31,6 @@ class SurveyForm
                     ->formatStateUsing(fn ($record) => $record?->project?->project_number),
                 TextInput::make('project.project_type')
                     ->label('Project Name')
-                    ->relationship(name: 'project', titleAttribute: 'project_type')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => 
-                        $record->project_type
-                    )
                     ->disabled()
                     ->dehydrated(false)
                     ->formatStateUsing(fn ($record) => $record?->project?->project_type),
@@ -61,10 +58,14 @@ class SurveyForm
                     ->multiple()
                     ->disk('public')
                     ->directory('survey-attachments')
-                    ->preserveFilenames()
+                    ->previewable()
+                    ->reorderable()
                     ->openable()
                     ->downloadable()
-                    ->dehydrated(false),
+                    ->panelLayout('grid')
+                    ->deleteUploadedFileUsing(function (string $file) {
+                        Storage::disk('public')->delete($file);
+                    }),
             ]);
     }
 }

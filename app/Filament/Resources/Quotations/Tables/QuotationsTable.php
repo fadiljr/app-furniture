@@ -19,8 +19,8 @@ class QuotationsTable
                 //
                 TextColumn::make('quotation_number')
                     ->label('Quotation Number'),
-                TextColumn::make('client.name')
-                    ->label('Client Name'),
+                // TextColumn::make('client.name')
+                //     ->label('Client Name'),
                 TextColumn::make('quotation_date')
                     ->label('Quotation Date'),
                 TextColumn::make('valid_until')

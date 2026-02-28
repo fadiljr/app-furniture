@@ -8,6 +8,7 @@ class Quotation extends Model
 {
     //
     protected $fillable = [
+        'project_id',
         'quotation_number',
         'quotation_date',
         'valid_until',
@@ -39,9 +40,9 @@ class Quotation extends Model
          return $this->hasMany(QuotationItem::class);
      }
 
-     public function client()
+     public function project()
      {
-         return $this->belongsTo(Client::class);
+         return $this->belongsTo(Project::class);
      }
     
 }
