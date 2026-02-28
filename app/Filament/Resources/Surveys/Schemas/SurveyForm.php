@@ -20,13 +20,20 @@ class SurveyForm
     {
         return $schema
             ->components([
-                Select::make('project.project_number')
+                Select::make('project_id')
                     ->label('Project Number')
-                    ->default(fn($record) => $record->project->project_number ?? '')
+                    ->relationship(name: 'project', titleAttribute: 'project_number')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => 
+                        $record->project_number
+                    )
                     ->disabled()
                     ->dehydrated(false),
-                Select::make('project.project_type')
+                Select::make('project_id')
                     ->label('Project Name')
+                    ->relationship(name: 'project', titleAttribute: 'project_type')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => 
+                        $record->project_type
+                    )
                     ->disabled()
                     ->dehydrated(false),
 
