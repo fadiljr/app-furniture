@@ -6,6 +6,7 @@ use App\Filament\Resources\Projects\ProjectResource;
 use Filament\Resources\Pages\CreateRecord;
 use App\Models\Quotation;
 use Illuminate\Support\Facades\DB;
+use App\Models\Design;
 
 
 class CreateProject extends CreateRecord
@@ -33,6 +34,13 @@ class CreateProject extends CreateRecord
                 'discount' => 0,
                 'tax' => 0,
                 'status' => 'draft',
+            ]);
+            Design::create([
+                'project_id' => $this->record->id,
+                'design_id' => 'DSN-' . now()->format('YmdHis'),
+                'description' => 'Initial design for project ' . $this->record->name,
+                'status' => 'requested',
+                'deadline' => now()->addDays(7),
             ]);
         });
     }

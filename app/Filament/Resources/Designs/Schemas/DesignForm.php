@@ -33,7 +33,8 @@ class DesignForm
                 ->required(),
 
             Textarea::make('description')
-                ->label('Deskripsi')
+                ->label('Design Description')
+                ->placeholder('Enter a description for the design...')
                 ->rows(4)
                 ->columnSpanFull(),
 
