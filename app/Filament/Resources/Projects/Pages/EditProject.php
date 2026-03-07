@@ -19,5 +19,14 @@ class EditProject extends EditRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+        protected function afterSave(): void
+    {
+        $this->record->surveys()->updateOrCreate(
+            [],
+            [
+                'survey_date' => $this->data['survey_date'] ?? null,
+            ]
+        );
     }   
 }

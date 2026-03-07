@@ -32,7 +32,7 @@ class ProjectForm
                 ->disabled()
                 ->dehydrated(false)
                 ->default(
-                    fn () => \App\Models\Project::generateProjectNumber()
+                    fn() => \App\Models\Project::generateProjectNumber()
                 ),
 
             Select::make('client_id')
@@ -41,7 +41,8 @@ class ProjectForm
                     name: 'client',
                     titleAttribute: 'name'
                 )
-                ->getOptionLabelFromRecordUsing(fn ($record) => 
+                ->getOptionLabelFromRecordUsing(
+                    fn($record) =>
                     $record->client_code . ' - ' . $record->name . ' - ' . $record->phone
                 )
                 ->required()
@@ -56,20 +57,11 @@ class ProjectForm
             Textarea::make('description')
                 ->maxLength(255),
 
-            Fieldset::make('Survey')
-                ->relationship('surveys')
-                ->schema([
-                    DateTimePicker::make('survey_date')
-                        ->label('Tanggal Survey')
-                        ->seconds(false)
-                        ->displayFormat('d/M/Y H:i')
-                        ->required(),
-
-                    Textarea::make('notes')
-                        ->label('Catatan Survey')
-                        ->rows(3)
-                        ->maxLength(255)
-                ])->columns(1),
+            DateTimePicker::make('survey_date')
+                ->label('Tanggal Survey')
+                ->seconds(false)
+                ->displayFormat('d/M/Y H:i')
+                ->required(),
         ]);
     }
 }

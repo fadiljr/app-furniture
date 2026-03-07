@@ -7,7 +7,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ActionGroup;
 use Filament\Tables\Table;
 
 class SurveysTable
@@ -40,9 +42,24 @@ class SurveysTable
             ->filters([
                 //
             ])
+            ->recordUrl(null)
             ->recordActions([
-                EditAction::make(),
-                ViewAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make()
+                        ->visible(fn ($record) => $record->status !== 'done'),
+                    Action::make('markDone')
+                        ->label('Done')
+                        ->icon('heroicon-o-check')
+                        ->color('success')
+                        ->visible(fn ($record) => $record->status !== 'done')
+                        ->requiresConfirmation()
+                        ->action(function ($record) {
+                            $record->update([
+                                'status' => 'done',
+                            ]);
+                        }),
+                ])
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
