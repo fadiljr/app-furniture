@@ -8,6 +8,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Hidden;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Checkbox;
 use Filament\Schemas\Components\Fieldset;
@@ -41,25 +42,22 @@ class QuotationForm
                             ->dehydrated(false)
                             ->default(fn() => \App\Models\Quotation::generateQuotationNumber()),
 
-                        // Select::make('client_id')
-                        //     ->label('Client')
-                        //     ->relationship(
-                        //         name: 'client',
-                        //         titleAttribute: 'name'
-                        //     )
-                        //     ->getOptionLabelFromRecordUsing(
-                        //         fn($record) =>
-                        //         $record->client_code . ' - ' . $record->name . ' - ' . $record->phone
-                        //     )
-                        //     ->required()
-                        //     ->searchable()
-                        //     ->preload(),
+                        Hidden::make('project_id')
+                            ->default(fn () => request()->get('project_id')),
 
-                        TextInput::make('project.project_number')
+                        TextInput::make('project_number')
                             ->label('Project Number')
                             ->disabled()
                             ->dehydrated(false)
-                            ->formatStateUsing(fn ($record) => $record?->project?->project_number),
+                            ->default(function () {
+                                $projectId = request()->get('project_id');
+                                if (!$projectId) {
+                                    return null;
+                                }
+
+                                $project = \App\Models\Project::find($projectId);
+                                return $project?->project_number;
+                            }),
 
                         DatePicker::make('quotation_date')
                             ->label('Quotation Date')

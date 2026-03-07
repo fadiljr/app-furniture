@@ -15,71 +15,66 @@ use Filament\Tables\Columns\BadgeColumn;
 
 class DesignsTable
 {
-        public static function configure(Table $table): Table
-{
+    public static function configure(Table $table): Table
+    {
         return $table
-        ->columns([
-            TextColumn::make('design_id')
-                ->label('Design ID')
-                ->searchable()
-                ->sortable(),
+            ->columns([
+                TextColumn::make('design_id')
+                    ->label('Design ID')
+                    ->searchable()
+                    ->sortable(),
 
-            TextColumn::make('description')
-                ->limit(40)
-                ->tooltip(fn ($record) => $record->description),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-            TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-
-            TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            BadgeColumn::make('status')
-                ->colors([
-                    'gray' => 'requested',
-                    'warning' => 'in_progress',
-                    'info' => 'in_review',
-                    'danger' => 'revision',
-                    'success' => 'approved',
-        ]),
-            BadgeColumn::make('deadline')
-                ->label('Deadline')
-                ->formatStateUsing(fn ($state) => $state?->format('d M Y'))
-                ->colors([
-                    'danger' => fn ($record) =>
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                BadgeColumn::make('status')
+                    ->colors([
+                        'gray' => 'requested',
+                        'warning' => 'in_progress',
+                        'info' => 'in_review',
+                        'danger' => 'revision',
+                        'success' => 'approved',
+                    ]),
+                BadgeColumn::make('deadline')
+                    ->label('Deadline')
+                    ->formatStateUsing(fn($state) => $state?->format('d M Y'))
+                    ->colors([
+                        'danger' => fn($record) =>
                         $record->deadline &&
-                        $record->deadline->isPast() &&
-                        $record->status !== 'approved',
-                    'gray' => fn ($record) =>
+                            $record->deadline->isPast() &&
+                            $record->status !== 'approved',
+                        'gray' => fn($record) =>
                         $record->deadline &&
-                        $record->deadline->isFuture(),
-                    'success' => fn ($record) =>
+                            $record->deadline->isFuture(),
+                        'success' => fn($record) =>
                         $record->status === 'approved',
-                ])
-                
-        ])
-            
-        ->filters([
-            //
-        ])
-        ->recordActions([
-    Action::make('preview')
-        ->label('Preview')
-        ->icon('heroicon-o-eye')
-        ->modalHeading('Preview Design Files')
-        ->modalSubmitAction(false)
-        ->modalCancelActionLabel('Tutup')
-        ->modalWidth('5xl')
-        ->modalContent(fn ($record) => view(
-            'filament.designs.preview-modal',
-            ['files' => $record->file_path]
-        )),
+                    ])
 
-    EditAction::make(),
-]);
-           
-}
+            ])
+
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                Action::make('preview')
+                    ->label('Preview')
+                    ->icon('heroicon-o-eye')
+                    ->modalHeading('Preview Design Files')
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Tutup')
+                    ->modalWidth('5xl')
+                    ->modalContent(fn($record) => view(
+                        'filament.designs.preview-modal',
+                        ['files' => $record->file_path]
+                    )),
+
+                EditAction::make(),
+            ]);
+    }
 }

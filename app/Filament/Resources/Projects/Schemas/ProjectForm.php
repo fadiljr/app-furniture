@@ -3,23 +3,9 @@
 namespace App\Filament\Resources\Projects\Schemas;
 
 use Filament\Schemas\Schema;
-// use Filament\Forms;
-// use Filament\Forms\Form;
-use Filament\Schemas\Components\Wizard;
-use Filament\Schemas\Components\Wizard\Step;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
-use App\Models\Material;
-use DateTime;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Schemas\Components\Fieldset;
-use Illuminate\Validation\Rules\Date;
 
 class ProjectForm
 {
@@ -53,15 +39,10 @@ class ProjectForm
                 ->required(),
             Textarea::make('address')
                 ->required()
-                ->maxLength(100),
+                ->placeholder('Enter address or copy paste from google maps')
+                ->maxLength(255),
             Textarea::make('description')
                 ->maxLength(255),
-
-            DateTimePicker::make('survey_date')
-                ->label('Tanggal Survey')
-                ->seconds(false)
-                ->displayFormat('d/M/Y H:i')
-                ->required(),
         ]);
     }
 }

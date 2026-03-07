@@ -21,22 +21,22 @@ class CreateProject extends CreateRecord
         return 'Successfully created project';
     }
 
-    protected function afterCreate(): void
-    {
-        DB::transaction(function () {
-            Quotation::create([
-                'project_id' => $this->record->id,
-                'quotation_number' => fn() => Quotation::generateQuotationNumber(),
-                'quotation_date' => now(),
-                'total_amount' => 0,
-                'grand_total' => 0,
-                'discount' => 0,
-                'tax' => 0,
-                'status' => 'draft',
-            ]);
-        });
-        $this->record->surveys()->create([
-            'survey_date' => $this->data['survey_date'],
-        ]);
-    }
+    // protected function afterCreate(): void
+    // {
+    //     DB::transaction(function () {
+    //         Quotation::create([
+    //             'project_id' => $this->record->id,
+    //             'quotation_number' => fn() => Quotation::generateQuotationNumber(),
+    //             'quotation_date' => now(),
+    //             'total_amount' => 0,
+    //             'grand_total' => 0,
+    //             'discount' => 0,
+    //             'tax' => 0,
+    //             'status' => 'draft',
+    //         ]);
+    //     });
+    //     $this->record->surveys()->create([
+    //         'survey_date' => $this->data['survey_date'],
+    //     ]);
+    // }
 }
