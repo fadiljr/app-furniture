@@ -35,5 +35,8 @@ class CreateProject extends CreateRecord
                 'status' => 'draft',
             ]);
         });
+        $this->record->surveys()->create([
+            'survey_date' => $this->data['survey_date'],
+        ]);
     }
 }

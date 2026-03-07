@@ -18,6 +18,7 @@ class ProjectsTable
             ->columns([
                 TextColumn::make('project_number')
                     ->label('Project Number')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('client.name')
                     ->label('Client Name')
@@ -45,11 +46,11 @@ class ProjectsTable
 
                 EditAction::make(),
 
-                Action::make('openMap')
-                    ->label('Open Map')
-                    ->icon('heroicon-o-map')
-                    ->url(fn ($record) => $record->address)
-                    ->openUrlInNewTab(),
+                // Action::make('openMap')
+                //     ->label('Open Map')
+                //     ->icon('heroicon-o-map')
+                //     ->url(fn ($record) => $record->address)
+                //     ->openUrlInNewTab(),
             ])
             ->defaultSort('created_at', 'desc');
     }
