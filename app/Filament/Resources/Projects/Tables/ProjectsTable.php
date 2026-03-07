@@ -37,7 +37,7 @@ class ProjectsTable
                     ->dateTime('d/M/Y H:i')
                     ->sortable(),
             ])
-            ->actions([
+            ->recordActions([
                 // Action::make('view')
                 //     ->label('Detail')
                 //     ->icon('heroicon-o-eye'),

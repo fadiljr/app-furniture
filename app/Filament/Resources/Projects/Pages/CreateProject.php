@@ -26,7 +26,7 @@ class CreateProject extends CreateRecord
         DB::transaction(function () {
             Quotation::create([
                 'project_id' => $this->record->id,
-                'quotation_number' => fn() => \App\Models\Quotation::generateQuotationNumber(),
+                'quotation_number' => fn() => Quotation::generateQuotationNumber(),
                 'quotation_date' => now(),
                 'total_amount' => 0,
                 'grand_total' => 0,
