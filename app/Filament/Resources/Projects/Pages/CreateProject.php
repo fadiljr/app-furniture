@@ -6,6 +6,7 @@ use App\Filament\Resources\Projects\ProjectResource;
 use Filament\Resources\Pages\CreateRecord;
 use App\Models\Quotation;
 use Illuminate\Support\Facades\DB;
+use App\Models\Design;
 
 
 class CreateProject extends CreateRecord
