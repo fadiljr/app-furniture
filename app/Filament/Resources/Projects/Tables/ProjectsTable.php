@@ -95,11 +95,11 @@ class ProjectsTable
                         ->visible(fn ($record) => $record->status == 'Completed survey')
                         ->url(fn ($record) => QuotationResource::getUrl('create', ['project_id' => $record->id])),
                 ]),
-                // Action::make('openMap')
-                //     ->label('Open Map')
-                //     ->icon('heroicon-o-map')
-                //     ->url(fn ($record) => $record->address)
-                //     ->openUrlInNewTab(),
+                Action::make('openMap')
+                    ->label('Open Map')
+                    ->icon('heroicon-o-map')
+                    ->url(fn ($record) => $record->address)
+                    ->openUrlInNewTab(),
             ])
             ->defaultSort('created_at', 'desc')
             ->toolbarActions([
