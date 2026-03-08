@@ -10,28 +10,35 @@ class ProjectChart extends ChartWidget
     protected ?string $heading = 'Project Overview';
 
     protected function getData(): array
-    {
-        return [
-            'datasets' => [
-                [
-                    'label' => 'Projects',
-                    'data' => [
-                        Project::where('status','in progress survey')->count(),
-                        Project::where('status','design')->count(),
-                        Project::where('status','production')->count(),
-                        Project::where('status','completed')->count(),
-                    ],
+{
+    return [
+        'datasets' => [
+            [
+                'label' => 'Project Pipeline',
+                'data' => [
+                    \App\Models\Survey::count(),
+                    \App\Models\Design::count(),
+                    \App\Models\Production::count(),
+                    \App\Models\Project::where('status', 'completed')->count(),
+                ],
+
+                'backgroundColor' => [
+                    '#f59e0b', // survey
+                    '#3b82f6', // design
+                    '#10b981', // production
+                    '#6366f1', // completed
                 ],
             ],
+        ],
 
-            'labels' => [
-                'Survey',
-                'Design',
-                'Production',
-                'Completed',
-            ],
-        ];
-    }
+        'labels' => [
+            'Survey',
+            'Design',
+            'Production',
+            'Completed',
+        ],
+    ];
+}
 
     protected function getType(): string
     {
