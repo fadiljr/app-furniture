@@ -18,7 +18,7 @@ class ProductionResource extends Resource
 {
     protected static ?string $model = Production::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::PaintBrush;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Cube;
 
     protected static ?string $recordTitleAttribute = 'Production';
 

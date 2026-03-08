@@ -20,7 +20,7 @@ class CompanyResource extends Resource
     protected static ?string $model = Company::class;
     protected static UnitEnum|string|null $navigationGroup = 'Master Data';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::BuildingOffice;
 
     protected static ?string $navigationLabel = 'Companies';
     protected static ?string $modelLabel = 'Company';
