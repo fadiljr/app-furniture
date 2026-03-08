@@ -77,4 +77,8 @@ class Project extends Model
     {
         return $this->hasOne(Rab::class);
     }
+    public function designs()
+    {
+        return $this->hasMany(Design::class);
+    }
 }
