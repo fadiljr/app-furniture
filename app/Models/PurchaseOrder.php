@@ -27,4 +27,8 @@ class PurchaseOrder extends Model
     {
         return $this->hasMany(MaterialReceipts::class);
     }
+    public function production()
+    {
+        return $this->belongsTo(Production::class);
+    }
 }
