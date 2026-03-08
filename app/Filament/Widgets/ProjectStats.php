@@ -18,10 +18,10 @@ class ProjectStats extends StatsOverviewWidget
                 ->description('Semua project')
                 ->color('primary'),
 
-            Stat::make('Survey Pending', Project::where('status', 'survey')->count())
+            Stat::make('Survey Pending', Project::where('status', 'need to survey')->count())
                 ->color('warning'),
 
-            Stat::make('Design Progress', Project::where('status', 'design')->count())
+            Stat::make('Design Progress', Project::where('status', 'in progress')->count())
                 ->color('info'),
 
             Stat::make('Production', Project::where('status', 'production')->count())
