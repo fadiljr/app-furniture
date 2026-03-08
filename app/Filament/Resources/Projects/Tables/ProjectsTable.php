@@ -44,9 +44,10 @@ class ProjectsTable
                         'Completed survey' => 'heroicon-o-check',
                         'Canceled' => 'heroicon-o-x-circle',
                         'in progress quotation' => 'heroicon-o-document-text',
+                        'Quotation Rejected' => 'heroicon-o-document-text',
                         'Quotation Approved' => 'heroicon-o-document-check',
                         'in progress design' => 'heroicon-o-pencil-square',
-                        'production' => 'heroicon-o-cog',
+                        'in progress production' => 'heroicon-o-cog',
                         'completed' => 'heroicon-o-check-badge',
                         default => 'heroicon-o-information-circle',
                     })
@@ -58,8 +59,9 @@ class ProjectsTable
                         'Canceled' => 'danger',
                         'in progress quotation' => 'warning',
                         'Quotation Approved' => 'success',
+                        'Quotation Rejected' => 'danger',
                         'in progress design' => 'warning',
-                        'production' => 'success',
+                        'in progress production' => 'warning',
                         'completed' => 'success',
                         default => 'gray',
                     })
