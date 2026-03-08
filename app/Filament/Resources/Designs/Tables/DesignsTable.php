@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
@@ -24,16 +25,10 @@ class DesignsTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                BadgeColumn::make('status')
+                TextColumn::make('project.project_number')
+                    ->label('Project Number')
+                    ->searchable(),
+                TextColumn::make('status')
                     ->colors([
                         'gray' => 'requested',
                         'warning' => 'in_progress',
@@ -41,9 +36,10 @@ class DesignsTable
                         'danger' => 'revision',
                         'success' => 'approved',
                     ]),
-                BadgeColumn::make('deadline')
+                TextColumn::make('deadline')
                     ->label('Deadline')
                     ->formatStateUsing(fn($state) => $state?->format('d M Y'))
+                    ->badge()
                     ->colors([
                         'danger' => fn($record) =>
                         $record->deadline &&
@@ -62,19 +58,75 @@ class DesignsTable
                 //
             ])
             ->recordActions([
-                Action::make('preview')
-                    ->label('Preview')
-                    ->icon('heroicon-o-eye')
-                    ->modalHeading('Preview Design Files')
-                    ->modalSubmitAction(false)
-                    ->modalCancelActionLabel('Tutup')
-                    ->modalWidth('5xl')
-                    ->modalContent(fn($record) => view(
-                        'filament.designs.preview-modal',
-                        ['files' => $record->file_path]
-                    )),
+                ActionGroup::make([
 
-                EditAction::make(),
+                    Action::make('preview')
+                        ->label('Preview')
+                        ->icon('heroicon-o-eye')
+                        ->modalHeading('Preview Design Files')
+                        ->modalSubmitAction(false)
+                        ->modalCancelActionLabel('Tutup')
+                        ->modalWidth('5xl')
+                        ->modalContent(fn($record) => view(
+                            'filament.designs.preview-modal',
+                            ['files' => $record->file_path]
+                        )),
+
+                    EditAction::make()
+                    ->modal()
+                    ->modalHeading('Edit Design')
+                    ->modalSubmitActionLabel('Save')
+                    ->visible(fn($record) => $record->status == 'requested' or $record->status == 'in progress' or $record->status == 'revision'),
+                    Action::make('inProgress')
+                        ->label('In Progress')
+                        ->icon('heroicon-o-arrow-trending-up')
+                        ->color('warning')
+                        ->visible(fn($record) => $record->status == 'requested' or $record->status == 'revision')
+                        ->requiresConfirmation()
+                        ->action(function ($record) {
+                            $record->update([
+                                'status' => 'in progress',
+                            ]);
+                        }),
+                    Action::make('inReview')
+                        ->label('Send to Review')
+                        ->icon('heroicon-o-eye')
+                        ->color('info')
+                        ->visible(fn($record) => $record->status == 'in progress')
+                        ->requiresConfirmation()
+                        ->action(function ($record) {
+                            $record->update([
+                                'status' => 'in review',
+                            ]);
+                        }),
+                    Action::make('approve')
+                        ->label('Approve')
+                        ->icon('heroicon-o-check')
+                        ->color('success')
+                        ->visible(fn($record) => $record->status == 'in review')
+                        ->requiresConfirmation()
+                        ->action(function ($record) {
+                            $record->update([
+                                'status' => 'approved',
+                            ]);
+                            if($project = $record->project) {
+                                $project->update([
+                                    'status' => 'Design Approved',
+                                ]);
+                            }
+                        }),
+                    Action::make('requestRevision')
+                        ->label('Request Revision')
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->visible(fn($record) => $record->status == 'in review')
+                        ->requiresConfirmation()
+                        ->action(function ($record) {
+                            $record->update([
+                                'status' => 'revision',
+                            ]);
+                        }),
+                ]),
             ]);
     }
 }

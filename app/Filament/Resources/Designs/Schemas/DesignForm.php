@@ -37,20 +37,6 @@ class DesignForm
                 ->placeholder('Enter a description for the design...')
                 ->rows(4)
                 ->columnSpanFull(),
-
-            Select::make('status')
-                ->options([
-                    'requested' => 'Design Requested',
-                    'in_progress' => 'In Progress',
-                    'in_review' => 'In Review',
-                    'revision' => 'Revision Required',
-                    'approved' => 'Approved',
-                ])
-                ->default('requested')
-                ->required(),
-
-            DatePicker::make('deadline')
-                ->required(),
         ]);
 }
 }
