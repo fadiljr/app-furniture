@@ -33,6 +33,16 @@ class QuotationForm
     {
         return $schema
             ->components([
+                Section::make('Survey Information')
+                    ->columnSpanFull()
+                    ->schema([
+                        TextArea::make('notes')
+                            ->label('Survey Notes')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->formatStateUsing(fn ($record) => $record?->project?->surveys?->notes),
+                    ])
+                    ->columns(2),
                 Section::make('Quotation Information')
                     ->columnSpanFull()
                     ->schema([
