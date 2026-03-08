@@ -49,15 +49,7 @@ class QuotationForm
                             ->label('Project Number')
                             ->disabled()
                             ->dehydrated(false)
-                            ->default(function () {
-                                $projectId = request()->get('project_id');
-                                if (!$projectId) {
-                                    return null;
-                                }
-
-                                $project = \App\Models\Project::find($projectId);
-                                return $project?->project_number;
-                            }),
+                            ->formatStateUsing(fn ($record) => $record?->project?->project_number),
 
                         DatePicker::make('quotation_date')
                             ->label('Quotation Date')
