@@ -11,6 +11,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Hidden;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Placeholder;
 use Filament\Schemas\Components\Fieldset;
 
 class QuotationForm
@@ -41,6 +42,47 @@ class QuotationForm
                             ->disabled()
                             ->dehydrated(false)
                             ->formatStateUsing(fn ($record) => $record?->project?->surveys?->notes),
+                        Placeholder::make('survey_attachments')
+                            ->label('Survey Attachments')
+                            ->content(function ($record) {
+                                $attachments = $record?->project?->surveys?->attachments ?? [];
+
+                                if (empty($attachments)) {
+                                    return 'No attachments';
+                                }
+
+                                if (is_string($attachments)) {
+                                    $attachments = json_decode($attachments, true) ?? [];
+                                }
+
+                                $links = collect($attachments)->map(function ($file) {
+                                    $url = \Illuminate\Support\Facades\Storage::url($file);
+                                    // $name = basename($file);
+                                    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+
+                                    $icon = '📎';
+
+                                    if (in_array($ext, ['jpg','jpeg','png','gif','webp'])) {
+                                        $icon = '🖼️';
+                                    } elseif ($ext === 'pdf') {
+                                        $icon = '📄';
+                                    } elseif (in_array($ext, ['doc','docx'])) {
+                                        $icon = '📝';
+                                    } elseif (in_array($ext, ['xls','xlsx','csv'])) {
+                                        $icon = '📊';
+                                    } elseif (in_array($ext, ['zip','rar'])) {
+                                        $icon = '🗜️';
+                                    }
+
+                                    return "<a href='{$url}' target='_blank' class='flex items-center gap-2 text-primary-600 underline'>
+                                                <span>{$icon}</span>
+                                                <span>Attachment.{$ext}</span>
+                                            </a>";
+                                })->implode('<br>');
+
+                                return new \Illuminate\Support\HtmlString($links);
+                            })
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
                 Section::make('Quotation Information')
@@ -260,7 +302,7 @@ class QuotationForm
                             ->dehydrated(true)
                             ->reactive(),
 
-                        Textarea::make('notes')
+                        Textarea::make('quotation notes')
                             ->label('Notes')
                             ->columnSpanFull(),
                     ])
