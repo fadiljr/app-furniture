@@ -8,6 +8,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Actions\Action;
 
 class ProductionsTable
 {
@@ -57,6 +58,10 @@ class ProductionsTable
                         ->modal()
                         ->modalHeading('Edit Production')
                         ->modalSubmitActionLabel('Save'),
+                    Action::make('create_purchase_order')
+                        ->label('Create Purchase Order')
+                        ->icon('heroicon-o-shopping-cart')
+                        ->url(fn ($record) => \App\Filament\Resources\PurchaseOrders\PurchaseOrderResource::getUrl('create', ['production_id' => $record->id])),
                 ]),
             ])
             ->toolbarActions([
