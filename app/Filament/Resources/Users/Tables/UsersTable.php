@@ -36,6 +36,12 @@ class UsersTable
                 TextColumn::make('roles.name')
                     ->label('Role')
                     ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'super_admin' => 'danger',
+                        'admin' => 'primary',
+                        'user' => 'success',
+                        default => 'secondary',
+                    })
                     ->formatStateUsing(fn ($state) => ucfirst(str_replace('_', ' ', $state))),
 
                 TextColumn::make('created_at')

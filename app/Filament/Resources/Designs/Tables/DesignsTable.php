@@ -29,13 +29,15 @@ class DesignsTable
                     ->label('Project Number')
                     ->searchable(),
                 TextColumn::make('status')
-                    ->colors([
-                        'gray' => 'requested',
-                        'warning' => 'in_progress',
-                        'info' => 'in_review',
-                        'danger' => 'revision',
-                        'success' => 'approved',
-                    ]),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'requested' => 'warning',
+                        'in progress' => 'primary',
+                        'in review' => 'info',
+                        'approved' => 'success',
+                        'revision' => 'danger',
+                        default => 'secondary',
+                    }),
                 TextColumn::make('deadline')
                     ->label('Deadline')
                     ->formatStateUsing(fn($state) => $state?->format('d M Y'))

@@ -34,7 +34,14 @@ class SurveysTable
                     ->dateTime('d M Y H:i'),
                 TextColumn::make('status')
                     ->label('Status')
-                    ->badge(),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'need to survey' => 'warning',
+                        'In Progress' => 'primary',
+                        'Completed' => 'success',
+                        'Canceled' => 'danger',
+                        default => 'secondary',
+                    }),
             ])
             ->filters([
                 //

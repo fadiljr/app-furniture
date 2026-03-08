@@ -20,7 +20,8 @@ class QuotationsTable
             ->columns([
                 //
                 TextColumn::make('quotation_number')
-                    ->label('Quotation Number'),
+                    ->label('Quotation Number')
+                    ->searchable(),
                 // TextColumn::make('client.name')
                 //     ->label('Client Name'),
                 TextColumn::make('quotation_date')
@@ -39,7 +40,14 @@ class QuotationsTable
                     ->formatStateUsing(fn($state) => number_format((float) $state, 0, ',', '.')),
                 TextColumn::make('status')
                     ->label('Status')
-                    ->badge(),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'draft' => 'gray',
+                        'sent' => 'warning',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        default => 'secondary',
+                    }),
             ])
             ->filters([
                 //

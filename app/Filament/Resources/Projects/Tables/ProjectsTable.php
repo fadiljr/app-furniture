@@ -14,6 +14,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\ViewAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filamemt\Support\Icons\Heroicon;
 
 class ProjectsTable
 {
@@ -36,6 +37,32 @@ class ProjectsTable
 
                 TextColumn::make('status')
                     ->badge()
+                    ->icon(fn (string $state): string => match ($state) {
+
+                        'new' => 'heroicon-o-plus',
+                        'in progress survey' => 'heroicon-o-map',
+                        'Completed survey' => 'heroicon-o-check',
+                        'Canceled' => 'heroicon-o-x-circle',
+                        'in progress quotation' => 'heroicon-o-document-text',
+                        'Quotation Approved' => 'heroicon-o-document-check',
+                        'in progress design' => 'heroicon-o-pencil-square',
+                        'production' => 'heroicon-o-cog',
+                        'completed' => 'heroicon-o-check-badge',
+                        default => 'heroicon-o-information-circle',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+
+                        'new' => 'gray',
+                        'in progress survey' => 'warning',
+                        'Completed survey' => 'success',
+                        'Canceled' => 'danger',
+                        'in progress quotation' => 'warning',
+                        'Quotation Approved' => 'success',
+                        'in progress design' => 'warning',
+                        'production' => 'success',
+                        'completed' => 'success',
+                        default => 'gray',
+                    })
                     ->searchable(),
             ])
             ->recordActions([
