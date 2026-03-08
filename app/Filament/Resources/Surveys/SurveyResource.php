@@ -18,7 +18,7 @@ class SurveyResource extends Resource
 {
     protected static ?string $model = Survey::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Map;
 
     protected static ?string $recordTitleAttribute = 'Survey';
     protected static ?string $label = 'Survey List';
