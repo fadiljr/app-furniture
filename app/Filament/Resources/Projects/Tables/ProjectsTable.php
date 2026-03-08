@@ -94,6 +94,11 @@ class ProjectsTable
                         ->icon('heroicon-o-document-text')
                         ->visible(fn ($record) => $record->status == 'Completed survey')
                         ->url(fn ($record) => QuotationResource::getUrl('create', ['project_id' => $record->id])),
+                        Action::make('createProduction')
+                        ->label('Create Production')
+                        ->icon('heroicon-o-cog')
+                        ->visible(fn ($record) => $record->status == 'Design Approved')
+                        ->url(fn ($record) => \App\Filament\Resources\Productions\ProductionResource::getUrl('create', ['project_id' => $record->id])),
                 ]),
                 // Action::make('openMap')
                 //     ->label('Open Map')

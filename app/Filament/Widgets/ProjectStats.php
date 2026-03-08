@@ -5,6 +5,9 @@ namespace App\Filament\Widgets;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use App\Models\Project;
+use App\Models\Survey;
+use App\Models\Design;
+use App\Models\Production;
 
 class ProjectStats extends StatsOverviewWidget
 {
@@ -15,16 +18,15 @@ class ProjectStats extends StatsOverviewWidget
         return [
 
             Stat::make('Total Project', Project::count())
-                ->description('Semua project')
                 ->color('primary'),
 
-            Stat::make('Survey Pending', Project::where('status', 'need to survey')->count())
+            Stat::make('Survey Pending', Survey::where('status', 'need to survey')->count())
                 ->color('warning'),
 
-            Stat::make('Design Progress', Project::where('status', 'in progress')->count())
+            Stat::make('Design Progress', Design::where('status', 'in progress')->count())
                 ->color('info'),
 
-            Stat::make('Production', Project::where('status', 'production')->count())
+            Stat::make('Production', Production::where('status', 'production')->count())
                 ->color('success'),
 
         ];

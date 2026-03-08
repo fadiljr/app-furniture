@@ -16,7 +16,7 @@ class ProjectChart extends ChartWidget
                 [
                     'label' => 'Projects',
                     'data' => [
-                        Project::where('status','survey')->count(),
+                        Project::where('status','in progress survey')->count(),
                         Project::where('status','design')->count(),
                         Project::where('status','production')->count(),
                         Project::where('status','completed')->count(),
