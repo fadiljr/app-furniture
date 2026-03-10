@@ -30,6 +30,14 @@ class DesignsTable
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()
+                    ->icon(fn (string $state): string => match ($state) {
+                        'requested' => 'heroicon-o-clock',
+                        'in progress' => 'heroicon-o-cog',
+                        'in review' => 'heroicon-o-eye',
+                        'approved' => 'heroicon-o-check',
+                        'revision' => 'heroicon-o-x-circle',
+                        default => 'heroicon-o-information-circle',
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'requested' => 'warning',
                         'in progress' => 'primary',

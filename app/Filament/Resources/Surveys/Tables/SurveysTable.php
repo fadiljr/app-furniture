@@ -35,6 +35,13 @@ class SurveysTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
+                    ->icon(fn (string $state): string => match ($state) {
+                        'need to survey' => 'heroicon-o-clock',
+                        'In Progress' => 'heroicon-o-cog',
+                        'Completed' => 'heroicon-o-check-circle',
+                        'Canceled' => 'heroicon-o-x-circle',
+                        default => 'heroicon-o-information-circle',
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'need to survey' => 'warning',
                         'In Progress' => 'primary',

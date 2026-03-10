@@ -41,6 +41,13 @@ class QuotationsTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
+                    ->icon(fn (string $state): string => match ($state) {
+                        'draft' => 'heroicon-o-pencil',
+                        'sent' => 'heroicon-o-paper-airplane',
+                        'approved' => 'heroicon-o-check',
+                        'rejected' => 'heroicon-o-x-circle',
+                        default => 'heroicon-o-information-circle',
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
                         'sent' => 'warning',

@@ -13,7 +13,6 @@ use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Placeholder;
 use Filament\Schemas\Components\Fieldset;
-use App\Models\Project;
 
 class QuotationForm
 {
@@ -42,26 +41,11 @@ class QuotationForm
                             ->label('Survey Notes')
                             ->disabled()
                             ->dehydrated(false)
-                            ->formatStateUsing(function ($record) {
-                                if ($record?->project?->surveys?->notes) {
-                                    return $record->project->surveys->notes;
-                                }
-
-                                $projectId = request()->get('project_id');
-                                $project = $projectId ? Project::with('surveys')->find($projectId) : null;
-
-                                return $project?->surveys?->notes;
-                            }),
+                            ->formatStateUsing(fn ($record) => $record?->project?->surveys?->notes),
                         Placeholder::make('survey_attachments')
                             ->label('Survey Attachments')
                             ->content(function ($record) {
-                                $attachments = $record?->project?->surveys?->attachments ?? null;
-
-                                if (!$attachments) {
-                                    $projectId = request()->get('project_id');
-                                    $project = $projectId ? Project::with('surveys')->find($projectId) : null;
-                                    $attachments = $project?->surveys?->attachments ?? [];
-                                }
+                                $attachments = $record?->project?->surveys?->attachments ?? [];
 
                                 if (empty($attachments)) {
                                     return 'No attachments';
@@ -117,16 +101,7 @@ class QuotationForm
                             ->label('Project Number')
                             ->disabled()
                             ->dehydrated(false)
-                            ->formatStateUsing(function ($record) {
-                                if ($record?->project?->project_number) {
-                                    return $record->project->project_number;
-                                }
-
-                                $projectId = request()->get('project_id');
-                                $project = $projectId ? Project::find($projectId) : null;
-
-                                return $project?->project_number;
-                            }),
+                            ->formatStateUsing(fn ($record) => $record?->project?->project_number),
 
                         DatePicker::make('quotation_date')
                             ->label('Quotation Date')
