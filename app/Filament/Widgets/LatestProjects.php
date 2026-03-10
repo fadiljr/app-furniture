@@ -22,7 +22,21 @@ class LatestProjects extends TableWidget
         ->label('Client'),
 
     \Filament\Tables\Columns\TextColumn::make('status')
-        ->badge(),
+        ->badge()
+        ->color(fn (string $state): string => match ($state) {
+            'Completed survey' => 'success',
+            'in progress production' => 'warning',
+            'in progress design' => 'warning',
+            'in progress survey' => 'warning',
+            'Quotation Approved' => 'success',
+            'Quotation Rejected' => 'danger',
+            'survey completed' => 'success',
+            'production completed' => 'success',
+            'design completed' => 'success',
+            'completed' => 'success',
+            'Canceled' => 'danger',
+            default => 'secondary',
+        }),
 
     \Filament\Tables\Columns\TextColumn::make('created_at')
         ->label('Created')
