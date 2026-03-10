@@ -19,7 +19,8 @@ class PurchaseOrderForm
                 TextInput::make('project.project_number')
                     ->label('Project Number')
                     ->formatStateUsing(fn($record) => $record?->production?->project?->project_number)
-                    ->disabled(),
+                    ->disabled()
+                    ->dehydrated(false),
             ]);
     }
 }

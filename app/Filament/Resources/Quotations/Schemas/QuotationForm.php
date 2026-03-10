@@ -41,11 +41,35 @@ class QuotationForm
                             ->label('Survey Notes')
                             ->disabled()
                             ->dehydrated(false)
-                            ->formatStateUsing(fn ($record) => $record?->project?->surveys?->notes),
+                            ->formatStateUsing(function ($record) {
+                                if ($record?->project?->surveys?->notes) {
+                                    return $record->project->surveys->notes;
+                                }
+
+                                $projectId = request()->get('project_id');
+
+                                if ($projectId) {
+                                    $project = \App\Models\Project::with('surveys')->find($projectId);
+                                    return $project?->surveys?->notes;
+                                }
+
+                                return null;
+                            }),
                         Placeholder::make('survey_attachments')
                             ->label('Survey Attachments')
                             ->content(function ($record) {
-                                $attachments = $record?->project?->surveys?->attachments ?? [];
+                                $attachments = $record?->project?->surveys?->attachments;
+
+                                if (!$attachments) {
+                                    $projectId = request()->get('project_id');
+
+                                    if ($projectId) {
+                                        $project = \App\Models\Project::with('surveys')->find($projectId);
+                                        $attachments = $project?->surveys?->attachments;
+                                    }
+                                }
+
+                                $attachments = $attachments ?? [];
 
                                 if (empty($attachments)) {
                                     return 'No attachments';
@@ -62,15 +86,15 @@ class QuotationForm
 
                                     $icon = '📎';
 
-                                    if (in_array($ext, ['jpg','jpeg','png','gif','webp'])) {
+                                    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
                                         $icon = '🖼️';
                                     } elseif ($ext === 'pdf') {
                                         $icon = '📄';
-                                    } elseif (in_array($ext, ['doc','docx'])) {
+                                    } elseif (in_array($ext, ['doc', 'docx'])) {
                                         $icon = '📝';
-                                    } elseif (in_array($ext, ['xls','xlsx','csv'])) {
+                                    } elseif (in_array($ext, ['xls', 'xlsx', 'csv'])) {
                                         $icon = '📊';
-                                    } elseif (in_array($ext, ['zip','rar'])) {
+                                    } elseif (in_array($ext, ['zip', 'rar'])) {
                                         $icon = '🗜️';
                                     }
 
@@ -95,13 +119,26 @@ class QuotationForm
                             ->default(fn() => \App\Models\Quotation::generateQuotationNumber()),
 
                         Hidden::make('project_id')
-                            ->default(fn () => request()->get('project_id')),
+                            ->default(fn() => request()->get('project_id')),
 
                         TextInput::make('project_number')
                             ->label('Project Number')
                             ->disabled()
                             ->dehydrated(false)
-                            ->formatStateUsing(fn ($record) => $record?->project?->project_number),
+                            ->formatStateUsing(function ($record) {
+                                if ($record?->project?->project_number) {
+                                    return $record->project->project_number;
+                                }
+
+                                $projectId = request()->get('project_id');
+
+                                if ($projectId) {
+                                    $project = \App\Models\Project::find($projectId);
+                                    return $project?->project_number;
+                                }
+
+                                return null;
+                            }),
 
                         DatePicker::make('quotation_date')
                             ->label('Quotation Date')
@@ -113,11 +150,11 @@ class QuotationForm
                     ->columns(2),
 
                 Section::make('Items')
-                    ->columnSpanFull() 
+                    ->columnSpanFull()
                     ->schema([
                         Repeater::make('items')
-                        ->relationship('items')
-                        ->schema([
+                            ->relationship('items')
+                            ->schema([
                                 TextInput::make('item_name')
                                     ->label('Item Name')
                                     ->required()
