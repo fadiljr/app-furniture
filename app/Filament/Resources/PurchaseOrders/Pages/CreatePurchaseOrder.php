@@ -13,10 +13,15 @@ class CreatePurchaseOrder extends CreateRecord
     protected function afterCreate(): void
     {
         // You can add any additional logic here after creating a purchase order
-        if ($this->record && $this->record->project_id) {
+        if ($this->record && $this->record->production_id) {
             Production::where('id', $this->record->production_id)->update([
                 'status' => 'in progress purchase order',
             ]);
         }
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

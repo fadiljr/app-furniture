@@ -15,12 +15,12 @@ class PurchaseOrdersTable
         return $table
             ->columns([
                 //
-                TextColumn::make('project.number')
+                TextColumn::make('production.project.project_number')
                     ->label('Project Number')
                     ->searchable(),
-                TextColumn::make('project.name')
-                ->label('Project Name')
-                ->searchable(),
+                TextColumn::make('production.project.project_type')
+                    ->label('Project Name')
+                    ->searchable(),
                 TextColumn::make('supplier.name')
                     ->label('Supplier Name')
                     ->searchable(),
@@ -35,7 +35,10 @@ class PurchaseOrdersTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                ->modal()
+                ->modalHeading('Edit Purchase Order')
+                ->modalSubmitActionLabel('Save Changes'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
