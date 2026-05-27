@@ -9,6 +9,7 @@ use App\Filament\Resources\Projects\Schemas\ProjectForm;
 use App\Filament\Resources\Projects\Tables\ProjectsTable;
 use App\Models\Project;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -23,7 +24,9 @@ class ProjectResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Project List';
     public static ?string $label = 'Projects List';
-
+    protected static UnitEnum|string|null $navigationGroup = 'Project Flow';
+    protected static ?int $navigationSort = 1;
+   
     public static function form(Schema $schema): Schema
     {
         return ProjectForm::configure($schema);

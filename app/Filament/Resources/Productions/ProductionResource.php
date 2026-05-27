@@ -9,6 +9,7 @@ use App\Filament\Resources\Productions\Schemas\ProductionForm;
 use App\Filament\Resources\Productions\Tables\ProductionsTable;
 use App\Models\Production;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -21,6 +22,8 @@ class ProductionResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Cube;
 
     protected static ?string $recordTitleAttribute = 'Production';
+    protected static UnitEnum|string|null $navigationGroup = 'Project Flow';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Schema $schema): Schema
     {

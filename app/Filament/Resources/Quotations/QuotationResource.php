@@ -9,6 +9,7 @@ use App\Filament\Resources\Quotations\Schemas\QuotationForm;
 use App\Filament\Resources\Quotations\Tables\QuotationsTable;
 use App\Models\Quotation;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,8 @@ class QuotationResource extends Resource
     protected static ?string $model = Quotation::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;
+    protected static UnitEnum|string|null $navigationGroup = 'Project Flow';
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $recordTitleAttribute = 'Quotation';
 

@@ -9,6 +9,7 @@ use App\Filament\Resources\Surveys\Schemas\SurveyForm;
 use App\Filament\Resources\Surveys\Tables\SurveysTable;
 use App\Models\Survey;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,7 +20,8 @@ class SurveyResource extends Resource
     protected static ?string $model = Survey::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Map;
-
+    protected static UnitEnum|string|null $navigationGroup = 'Project Flow';
+    protected static ?int $navigationSort = 2;
     protected static ?string $recordTitleAttribute = 'Survey';
     protected static ?string $label = 'Survey List';
 

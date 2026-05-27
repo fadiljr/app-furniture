@@ -9,6 +9,7 @@ use App\Filament\Resources\Invoices\Schemas\InvoiceForm;
 use App\Filament\Resources\Invoices\Tables\InvoicesTable;
 use App\Models\Invoice;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -21,6 +22,8 @@ class InvoiceResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CreditCard;
 
     protected static ?string $recordTitleAttribute = 'Invoice';
+    protected static UnitEnum|string|null $navigationGroup = 'Project Flow';
+    protected static ?int $navigationSort = 7;
 
     public static function form(Schema $schema): Schema
     {

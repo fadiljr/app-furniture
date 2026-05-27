@@ -9,6 +9,7 @@ use App\Filament\Resources\Designs\Schemas\DesignForm;
 use App\Filament\Resources\Designs\Tables\DesignsTable;
 use App\Models\Design;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -22,6 +23,8 @@ class DesignResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::PaintBrush;
 
     protected static ?string $recordTitleAttribute = 'Design';
+    protected static UnitEnum|string|null $navigationGroup = 'Project Flow';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Schema $schema): Schema
     {
