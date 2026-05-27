@@ -20,6 +20,8 @@ class QuotationResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $recordTitleAttribute = 'Quotation';
 
     public static function form(Schema $schema): Schema

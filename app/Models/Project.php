@@ -81,4 +81,8 @@ class Project extends Model
     {
         return $this->hasMany(Design::class);
     }
+    public function projectTypes()
+    {
+        return $this->belongsToMany(ProjectType::class);
+    }
 }

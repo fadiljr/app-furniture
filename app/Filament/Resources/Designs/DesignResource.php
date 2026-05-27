@@ -22,6 +22,8 @@ class DesignResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::PaintBrush;
 
     protected static ?string $recordTitleAttribute = 'Design';
+    
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Schema $schema): Schema
     {

@@ -21,6 +21,8 @@ class ProjectResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::PresentationChartBar;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $recordTitleAttribute = 'Project List';
     public static ?string $label = 'Projects List';
 
